@@ -156,6 +156,8 @@
             fmtRange(r.start, r.end, { duration: true }),
             g.roles.length > 1 && has(r.location) ? ` · ${r.location}` : ""),
           has(r.description) && prose(r.description),
+          has(r.tech) && h("ul", { class: "chips tech", "aria-label": "Technologies" },
+            r.tech.map((t) => h("li", { class: "chip" }, t))),
         ))),
       );
     });

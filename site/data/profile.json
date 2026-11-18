@@ -17,7 +17,131 @@
     }
   ],
   "summary": "Expert technical leader with years of experience building applications, leading engineers, and delivering successful integrated projects.  Accustomed to delivering results that exceed client goals and expectations, from inception to execution.  Extensive experience using a cross-disciplinary set of skills to bridge communication gaps between engineering, design, and product resulting in increased efficiency and improved quality.",
-  "experience": [],
+  "experience": [
+    {
+      "company": "Arthrex",
+      "title": "Software Engineering Manager",
+      "location": "Remote",
+      "start": "Jan 2025",
+      "end": "",
+      "description": ""
+    },
+    {
+      "company": "Arthrex",
+      "title": "Principal Software Engineer",
+      "location": "San Diego, California, United States · Remote",
+      "start": "Mar 2023",
+      "end": "",
+      "description": ""
+    },
+    {
+      "company": "Arthrex",
+      "title": "Sr. Software Engineer - Lead",
+      "location": "San Diego, California, United States",
+      "start": "Dec 2020",
+      "end": "Mar 2023",
+      "description": ""
+    },
+    {
+      "company": "Phidiax",
+      "title": "Senior Mobile, Web, and XR Architect",
+      "location": "Denver Metropolitan Area",
+      "start": "Apr 2018",
+      "end": "Dec 2020",
+      "description": "• App ideation, feature definition, application design, framework design\n• Prototyping AR and web experiences rapidly.\n• Designing and building mobile AR and web applications.\n• Lead app development from ideation to prototyping to early iterations to production ready\n• Cross platform app support for iOS and Android\n• Built library of Unity UI components\n• Standardized app architecture patterns",
+      "tech": [
+        "Unity3D",
+        "Angular",
+        "Firebase",
+        "Blender",
+        "GIMP/Paint.NET",
+        "Microsoft DevOps",
+        "Mapbox",
+        "C#",
+        "JavaScript/TypeScript",
+        "PowerShell"
+      ]
+    },
+    {
+      "company": "ByteCubed",
+      "title": "Senior Software Engineer, Web/Mixed Reality",
+      "location": "Remote",
+      "start": "Jan 2016",
+      "end": "Mar 2018",
+      "description": "Lead the company initiative to start a Mixed Reality practice primarily working with government agencies to use the Microsoft HoloLens to empower agents. Work with other front end developers to standardize the application package and build process for all new client web projects. Lead a cross disciplinary team to ensure the products created were an incredible user experience.\n\n• Lead the ByteCubed HoloLens Academy team\n• Design and build an internal HoloLens Unity toolkit\n• Design and implement the ByteCubed HoloLens Client Engagement Model and Envisioning Process\n• Rapidly prototype ideas for HoloLens pre-sales conversations\n• Work from requirements to build web interfaces",
+      "tech": [
+        "AngularJS/2/4",
+        "TypeScript",
+        "Sass/SCSS",
+        "Grunt",
+        "webpack",
+        "jQuery",
+        "npm",
+        "Java",
+        "Meteor",
+        "MongoDB",
+        "Unity3D",
+        "Microsoft HoloLens"
+      ]
+    },
+    {
+      "company": "Dire Wolf Digital",
+      "title": "Lead Client Engineer",
+      "location": "Denver",
+      "start": "Jul 2015",
+      "end": "Dec 2015",
+      "description": "Lead a team of 4–6 client engineers working on a popular licensed video game. Work with production to estimate and schedule features to fit within the client’s timeline. Deploy both content and feature releases with hard deadlines based on physical product releases. Work with Quality Assurance to provide proper test coverage.",
+      "tech": [
+        "Unity3D",
+        "iOS",
+        "Android",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "company": "Dire Wolf Digital",
+      "title": "Client Engineer",
+      "location": "Denver Metropolitan Area",
+      "start": "Jun 2014",
+      "end": "Jul 2015",
+      "description": "Work in a small, 2–3 person team building a 2d/3d client using the Unity engine and C#. Architect and implement game critical features from design specifications working closely with the art team. Developed improved work flows to efficiently implement art heavy features.",
+      "tech": [
+        "Unity3D",
+        "iOS",
+        "Android",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "company": "Cynergy, The Experience Agency",
+      "title": "Technical Lead",
+      "location": "",
+      "start": "Jan 2010",
+      "end": "Jun 2014",
+      "description": "Work closely with User Experience Group and Business Analyst group to define and understand technical requirements while recommending alternative or improved solutions based on technical limitations. Manage teams of developers through tasking, mentoring, and performance reviewing.",
+      "tech": [
+        "Silverlight",
+        "WPF",
+        ".NET",
+        "C#",
+        "ASP.NET",
+        "jQuery",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
+    },
+    {
+      "company": "Cynergy, The Experience Agency",
+      "title": "Software Developer",
+      "location": "",
+      "start": "Aug 2008",
+      "end": "Jan 2010",
+      "description": "Worked in small teams of developers with the guidance of a Technical Lead to build web and desktop applications in .Net technologies. Quickly became the go-to developer for all Silverlight/WPF issues company-wide. Promoted to Technical Lead after 1.5 years, becoming the youngest, at the time, Technical Lead in the company."
+    }
+  ],
   "projects": [],
   "education": [],
   "certifications": [],
