@@ -204,13 +204,11 @@
   }
 
   function contactSection(p) {
-    const linkedin = (p.links || []).find((l) => /linkedin\.com/i.test(l.url || "") && safeUrl(l.url));
-    if (!has(p.email) && !linkedin) return null;
+    if (!has(p.email)) return null;
     return section("contact", "Contact", h("div", { class: "contact" },
-      h("p", null, p.contactBlurb || "The best way to reach me is by email or on LinkedIn."),
+      h("p", null, p.contactBlurb || "The best way to reach me is by email."),
       h("div", { class: "links" },
-        has(p.email) && h("a", { class: "btn primary", href: "mailto:" + p.email }, p.email),
-        linkedin && h("a", { class: "btn", href: safeUrl(linkedin.url), target: "_blank", rel: "noopener" }, "LinkedIn"),
+        h("a", { class: "btn primary", href: "mailto:" + p.email }, p.email),
       ),
     ));
   }
@@ -264,7 +262,7 @@
     hero.removeAttribute("aria-busy");
     hero.className = "page-head";
     hero.replaceChildren(
-      h("a", { class: "back", href: ROOT || "./" }, "← ", p.name),
+      h("a", { class: "back", href: ROOT || "./" }, "← Back"),
       h("h1", null, title),
       has(p.headline) && h("p", { class: "headline" }, p.headline),
     );
@@ -282,7 +280,8 @@
       renderPageHead(p, title);
       out = experienceSections(p);
       nav = [h("a", { href: ROOT + "#about" }, "About"),
-        ...out.map((s) => h("a", { href: "#" + s.id }, s.querySelector("h2").textContent))];
+        ...out.filter((s) => s.id !== "skills")
+          .map((s) => h("a", { href: "#" + s.id }, s.querySelector("h2").textContent))];
     } else {
       document.title = p.name + (has(p.headline) ? ` — ${p.headline}` : "");
       renderHero(p);
