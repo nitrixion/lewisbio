@@ -2,11 +2,15 @@
   "name": "Lewis Broerman",
   "headline": "Manager - Software Engineer at Arthrex",
   "location": "San Diego, California, United States",
-  "email": "",
+  "email": "l.broerman@gmail.com",
   "avatar": "",
   "resume": "",
   "contactBlurb": "",
   "links": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/lewis-broerman/"
+    },
     {
       "label": "GitHub",
       "url": "https://github.com/nitrixion"
