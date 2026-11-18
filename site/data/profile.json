@@ -1,0 +1,62 @@
+{
+  "_comment": "PLACEHOLDER DATA. Replace by running scripts/linkedin_to_profile.py on your LinkedIn data export, or edit by hand.",
+  "name": "Lewis B.",
+  "headline": "Software Engineer",
+  "location": "City, State",
+  "email": "",
+  "avatar": "",
+  "resume": "",
+  "links": [
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle/" },
+    { "label": "GitHub", "url": "https://github.com/nitrixion" }
+  ],
+  "summary": "A short paragraph about who you are and what you do. This comes from the About section of your LinkedIn profile.\n\nA second paragraph works too.",
+  "experience": [
+    {
+      "company": "Example Company",
+      "title": "Senior Software Engineer",
+      "location": "Remote",
+      "start": "Mar 2022",
+      "end": "",
+      "description": "What you own and the impact you've had.\n• A notable accomplishment\n• Another one, with a number in it"
+    },
+    {
+      "company": "Example Company",
+      "title": "Software Engineer",
+      "location": "Remote",
+      "start": "Jun 2019",
+      "end": "Feb 2022",
+      "description": "Role description from LinkedIn."
+    },
+    {
+      "company": "Previous Employer",
+      "title": "Developer",
+      "location": "City, State",
+      "start": "Jan 2016",
+      "end": "May 2019",
+      "description": ""
+    }
+  ],
+  "projects": [
+    {
+      "title": "Example Project",
+      "description": "One or two sentences on what it is and why it's interesting.",
+      "url": "https://github.com/nitrixion",
+      "start": "2023",
+      "end": "2024"
+    }
+  ],
+  "education": [
+    {
+      "school": "Example University",
+      "degree": "B.S. Computer Science",
+      "start": "2012",
+      "end": "2016",
+      "notes": "",
+      "activities": ""
+    }
+  ],
+  "certifications": [],
+  "skills": ["Skill one", "Skill two", "Skill three"],
+  "languages": []
+}

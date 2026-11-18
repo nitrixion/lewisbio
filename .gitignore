@@ -1,0 +1,6 @@
+# LinkedIn data exports contain private info (email, phone, connections). Never commit them.
+linkedin-export/
+Basic_LinkedInDataExport_*/
+*.zip
+.DS_Store
+__pycache__/
