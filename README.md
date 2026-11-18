@@ -6,7 +6,9 @@ All content lives in [`site/data/profile.json`](site/data/profile.json), which i
 
 ```
 site/                    ← everything that gets published
-  index.html, styles.css, app.js
+  index.html             ← home: intro, about, education/projects, contact
+  experience/index.html  ← lewisb.io/experience/: full work history + skills
+  styles.css, app.js     ← shared by both pages
   data/profile.json      ← the content
   CNAME                  ← tells GitHub Pages the domain is lewisb.io
 scripts/linkedin_to_profile.py   ← LinkedIn export → profile.json
@@ -33,6 +35,8 @@ scripts/linkedin_to_profile.py   ← LinkedIn export → profile.json
    - `resume`: put a PDF at `site/resume.pdf` and set `"resume": "resume.pdf"`
 
    Re-running the importer later keeps these hand-edited fields.
+4. Optional: each role can have a `"tech": [...]` list, which shows as tags under the role.
+   If `"skills"` is empty, the Skills section on the experience page lists all of those tags instead.
 
 Preview locally:
 

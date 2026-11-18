@@ -24,10 +24,16 @@
 
   const has = (v) => Array.isArray(v) ? v.length > 0 : v != null && String(v).trim() !== "";
 
+  // Each page sets <body data-page="..." data-root="...">; data-root is the
+  // relative path back to the site root (e.g. "../" from /experience/).
+  const PAGE = document.body.dataset.page || "home";
+  const ROOT = document.body.dataset.root || "";
+  const BASE = new URL(ROOT || "./", location.href);
+
   function safeUrl(url) {
     if (!has(url)) return null;
     try {
-      const u = new URL(url, location.href);
+      const u = new URL(url, BASE);
       return ["http:", "https:", "mailto:"].includes(u.protocol) ? u.href : null;
     } catch { return null; }
   }
@@ -163,30 +169,66 @@
     });
   }
 
-  function card({ title, meta, body, url, linkText }) {
-    const href = safeUrl(url);
+  function card({ title, meta, body, url, linkText, internal = false }) {
+    const href = internal ? url : safeUrl(url);
     const inner = [
       h("h3", null, title),
       has(meta) && h("p", { class: "meta" }, meta),
       has(body) && prose(body),
       href && h("span", { class: "arrow" }, (linkText || "View") + " →"),
     ];
-    return href
-      ? h("a", { class: "card", href, target: "_blank", rel: "noopener" }, inner)
-      : h("div", { class: "card" }, inner);
+    if (!href) return h("div", { class: "card" }, inner);
+    return internal
+      ? h("a", { class: "card", href }, inner)
+      : h("a", { class: "card", href, target: "_blank", rel: "noopener" }, inner);
   }
 
-  function render(p) {
-    document.title = p.name + (has(p.headline) ? ` — ${p.headline}` : "");
-    document.getElementById("brand").textContent = p.name;
-    const desc = document.querySelector('meta[name="description"]');
-    if (has(p.headline)) desc.setAttribute("content", `${p.name} — ${p.headline}`);
+  // Explicit skills win; otherwise collect the tech tags from every role,
+  // most recent first, without duplicates.
+  function skillsFor(p) {
+    if (has(p.skills)) return p.skills;
+    const seen = new Set(), out = [];
+    for (const r of p.experience || []) for (const t of r.tech || []) {
+      const k = t.toLowerCase();
+      if (!seen.has(k)) { seen.add(k); out.push(t); }
+    }
+    return out;
+  }
 
-    renderHero(p);
+  function totalYears(experience) {
+    const starts = (experience || []).map((r) => parseDate(r.start)).filter(Boolean);
+    if (!starts.length) return 0;
+    const first = starts.reduce((a, b) => (a.y * 12 + (a.m || 0) <= b.y * 12 + (b.m || 0) ? a : b));
+    const now = new Date();
+    return Math.floor(((now.getFullYear() - first.y) * 12 + now.getMonth() - (first.m || 0)) / 12);
+  }
 
+  function contactSection(p) {
+    const linkedin = (p.links || []).find((l) => /linkedin\.com/i.test(l.url || "") && safeUrl(l.url));
+    if (!has(p.email) && !linkedin) return null;
+    return section("contact", "Contact", h("div", { class: "contact" },
+      h("p", null, p.contactBlurb || "The best way to reach me is by email or on LinkedIn."),
+      h("div", { class: "links" },
+        has(p.email) && h("a", { class: "btn primary", href: "mailto:" + p.email }, p.email),
+        linkedin && h("a", { class: "btn", href: safeUrl(linkedin.url), target: "_blank", rel: "noopener" }, "LinkedIn"),
+      ),
+    ));
+  }
+
+  function homeSections(p) {
     const out = [];
     if (has(p.summary)) out.push(section("about", "About", prose(p.summary, "about")));
-    if (has(p.experience)) out.push(section("experience", "Experience", renderExperience(p.experience)));
+    if (has(p.experience)) {
+      const latest = p.experience[0];
+      const years = totalYears(p.experience);
+      const companies = [...new Set(p.experience.map((r) => r.company).filter(has))];
+      out.push(section("experience", "Experience", h("div", { class: "cards" }, card({
+        title: [latest.title, latest.company].filter(has).join(" at "),
+        meta: years ? `${years}+ years building software and leading teams` : "",
+        body: companies.length > 1 ? "Previously: " + companies.slice(1).join(" · ") : "",
+        url: "experience/", linkText: "Full experience & skills", internal: true,
+      }))));
+    }
     if (has(p.projects)) out.push(section("projects", "Projects", h("div", { class: "cards two" },
       p.projects.map((x) => card({ title: x.title, meta: fmtRange(x.start, x.end), body: x.description, url: x.url })))));
     if (has(p.education)) out.push(section("education", "Education", h("div", { class: "cards" },
@@ -201,30 +243,62 @@
         meta: [c.authority, fmtDate(c.start)].filter(has).join(" · "),
         url: c.url, linkText: "Credential",
       })))));
-    if (has(p.skills)) out.push(section("skills", "Skills", h("ul", { class: "chips" },
-      p.skills.map((s) => h("li", { class: "chip" }, s)))));
     if (has(p.languages)) out.push(section("languages", "Languages", h("ul", { class: "chips" },
       p.languages.map((l) => h("li", { class: "chip" }, l.name, has(l.proficiency) && h("small", null, l.proficiency))))));
-    const linkedin = (p.links || []).find((l) => /linkedin\.com/i.test(l.url || "") && safeUrl(l.url));
-    if (has(p.email) || linkedin) {
-      out.push(section("contact", "Contact", h("div", { class: "contact" },
-        h("p", null, p.contactBlurb || "The best way to reach me is by email or on LinkedIn."),
-        h("div", { class: "links" },
-          has(p.email) && h("a", { class: "btn primary", href: "mailto:" + p.email }, p.email),
-          linkedin && h("a", { class: "btn", href: safeUrl(linkedin.url), target: "_blank", rel: "noopener" }, "LinkedIn"),
-        ),
-      )));
+    out.push(contactSection(p));
+    return out.filter(Boolean);
+  }
+
+  function experienceSections(p) {
+    const out = [];
+    if (has(p.experience)) out.push(section("experience", "Experience", renderExperience(p.experience)));
+    const skills = skillsFor(p);
+    if (has(skills)) out.push(section("skills", "Skills", h("ul", { class: "chips" },
+      skills.map((s) => h("li", { class: "chip" }, s)))));
+    out.push(contactSection(p));
+    return out.filter(Boolean);
+  }
+
+  function renderPageHead(p, title) {
+    const hero = document.getElementById("hero");
+    hero.removeAttribute("aria-busy");
+    hero.className = "page-head";
+    hero.replaceChildren(
+      h("a", { class: "back", href: ROOT || "./" }, "← ", p.name),
+      h("h1", null, title),
+      has(p.headline) && h("p", { class: "headline" }, p.headline),
+    );
+  }
+
+  function render(p) {
+    const brand = document.getElementById("brand");
+    brand.textContent = p.name;
+    brand.setAttribute("href", PAGE === "home" ? "#top" : (ROOT || "./"));
+
+    let out, nav;
+    if (PAGE === "experience") {
+      const title = has(skillsFor(p)) ? "Experience & Skills" : "Experience";
+      document.title = `${title} — ${p.name}`;
+      renderPageHead(p, title);
+      out = experienceSections(p);
+      nav = [h("a", { href: ROOT + "#about" }, "About"),
+        ...out.map((s) => h("a", { href: "#" + s.id }, s.querySelector("h2").textContent))];
+    } else {
+      document.title = p.name + (has(p.headline) ? ` — ${p.headline}` : "");
+      renderHero(p);
+      out = homeSections(p);
+      nav = out
+        .filter((s) => ["about", "experience", "projects", "education", "contact"].includes(s.id))
+        .map((s) => s.id === "experience"
+          ? h("a", { href: "experience/" }, "Experience")
+          : h("a", { href: "#" + s.id }, s.querySelector("h2").textContent));
     }
     document.getElementById("sections").replaceChildren(...out);
-
-    document.getElementById("nav").replaceChildren(...out
-      .filter((s) => ["about", "experience", "projects", "education", "skills", "contact"].includes(s.id))
-      .map((s) => h("a", { href: "#" + s.id }, s.querySelector("h2").textContent)));
-
+    document.getElementById("nav").replaceChildren(...nav);
     document.getElementById("footer").textContent = `© ${new Date().getFullYear()} ${p.name}`;
   }
 
-  fetch("data/profile.json", { cache: "no-cache" })
+  fetch(ROOT + "data/profile.json", { cache: "no-cache" })
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(render)
     .catch((err) => {

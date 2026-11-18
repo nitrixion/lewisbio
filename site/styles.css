@@ -85,6 +85,13 @@ a:hover { text-decoration: underline; }
 .btn.primary:hover { color: #fff; filter: brightness(1.08); }
 @media (prefers-color-scheme: dark) { .btn.primary, .btn.primary:hover { color: #0d1220; } }
 
+/* Subpage header */
+.page-head { padding: 48px 0 32px; }
+.page-head .back { display: inline-block; font-size: 14px; font-weight: 500; color: var(--muted); margin-bottom: 14px; }
+.page-head .back:hover { color: var(--accent); text-decoration: none; }
+.page-head h1 { font-size: clamp(30px, 4.5vw, 40px); line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.025em; }
+.page-head .headline { margin: 0; }
+
 /* Sections */
 .section { padding: 36px 0; border-top: 1px solid var(--line); }
 .section h2 {
